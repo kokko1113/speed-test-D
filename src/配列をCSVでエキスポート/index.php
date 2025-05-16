@@ -51,15 +51,15 @@ function putCsv($data) {
         // ダウンロード開始
 
         // ファイルタイプ（csv）
-        header('Content-Type: application/octet-stream');
+        // header('Content-Type: application/octet-stream');
 
-        // ファイル名
-        header('Content-Disposition: attachment; filename=' . $fileName); 
-        // ファイルのサイズ　ダウンロードの進捗状況が表示
-        header('Content-Length: ' . filesize($csvFileName)); 
-        header('Content-Transfer-Encoding: binary');
-        // ファイルを出力する
-        readfile($csvFileName);
+        // // ファイル名
+        // header('Content-Disposition: attachment; filename=' . $fileName); 
+        // // ファイルのサイズ　ダウンロードの進捗状況が表示
+        // header('Content-Length: ' . filesize($csvFileName)); 
+        // header('Content-Transfer-Encoding: binary');
+        // // ファイルを出力する
+        // readfile($csvFileName);
 
     } catch(Exception $e) {
 
