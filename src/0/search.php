@@ -1,38 +1,32 @@
-<?php
-$dsn = "mysql:host=mariadb;dbname=php-dev;charset=utf8mb4";
-$user = "root";
-$pass = "root";
-$limit = $_GET["limit"];
-$category = $_GET["category"];
-$price = $_GET["price"];
-try {
-    $pdo = new PDO($dsn, $user, $pass);
-    $conditions = [];
-    $params = [];
-
-    if ($category) {
-        $conditions[] = "category = :category";
-        $params[':category'] = $category;
+<?php 
+$dsn="mysql:host=mariadb;dbname=php-dev;charset=utf8mb4";
+$user="root";
+$pass="root";
+$limit=$_GET["limit"];
+$price=$_GET["price"];
+$category=$_GET["category"];
+try{
+    $pdo=new PDO($dsn,$user,$pass);
+    $arr=[];
+    $params=[];
+    if($category){
+        $arr[]="category =  :category";
+        $params['category']=$category;
     }
-
-    if ($price) {
-        $conditions[] = "price $limit :price";
-        $params[':price'] = $price;
+    if($price){
+        $arr[]="price $limit :price";
+        $params['price']=$price;
     }
-
-    $sql = "SELECT * FROM uses";
-    if (!empty($conditions)) {
-        $sql .= " WHERE " . implode(" AND ", $conditions);
+    $sql="SELECT * FROM uses";
+    if(!empty($arr)){
+        $sql.=" WHERE ".implode(" AND ",$arr);
     }
-
-    $stmt = $pdo->prepare($sql);
-
+    $stmt=$pdo->prepare($sql);
     foreach ($params as $key => $value) {
-        $stmt->bindValue($key, $value, is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        $stmt->bindValue($key,$value,is_numeric($value)?PDO::PARAM_INT:PDO::PARAM_STR);
     }
-
     $stmt->execute();
-} catch (PDOException $e) {
+}catch(PDOException $e){
     echo "error";
     echo $e->getMessage();
     exit();
